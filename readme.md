@@ -5,3 +5,4 @@
 4. Pointers
 5. Structs
 6. Interfaces
+7. Arrays, Slices & Maps (Data management)
