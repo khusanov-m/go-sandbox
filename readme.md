@@ -6,3 +6,5 @@
 5. Structs
 6. Interfaces
 7. Arrays, Slices & Maps (Data management)
+8. Function: Anonymous, Variadic, Recursion
+9. Price Calculator (Project)

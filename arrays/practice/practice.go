@@ -1,7 +1,41 @@
 package main
 
-func main() {
+import "fmt"
 
+type Product struct {
+	title string
+	id    int
+	price float64
+}
+
+func main() {
+	// 1.
+	hobbies := [3]string{"reading", "coding", "gaming"}
+	fmt.Println(hobbies)
+	// 2.
+	fmt.Println(hobbies[0])
+	fmt.Println(hobbies[1:])
+	// 3.
+	newHobbies := hobbies[:2]
+	fmt.Println(newHobbies)
+	// 4.
+	newHobbies = newHobbies[1:cap(newHobbies)]
+	fmt.Println(newHobbies)
+	// 5.
+	courseGoals := []string{"learn go", "learn more go"}
+	// 6.
+	courseGoals[1] = "change new goal"
+	fmt.Println(courseGoals)
+	courseGoals = append(courseGoals, "3rd Goal")
+	fmt.Println(courseGoals)
+	// 7.
+	products := []Product{
+		{"title1", 1, 1.0},
+		{"title2", 2, 2.0},
+	}
+	fmt.Println(products)
+	products = append(products, Product{"title3", 3, 3.0})
+	fmt.Println(products)
 }
 
 // Time to practice what you learned!
