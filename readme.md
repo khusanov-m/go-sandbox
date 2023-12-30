@@ -1,7 +1,7 @@
 ## The content will go as follow structure
 
 1. Basics
-2. ~~ Essentials ~~ included in Basics   
+2. ~~Essentials~~ included in Basics   
 3. Packages
 4. Pointers
 5. Structs
