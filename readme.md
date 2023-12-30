@@ -9,3 +9,5 @@
 7. Arrays, Slices & Maps (Data management)
 8. Function: Anonymous, Variadic, Recursion
 9. Price Calculator (Project)
+10. Concurrency
+11. Course Project: API with JWT Authentication
