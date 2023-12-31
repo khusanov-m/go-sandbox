@@ -12,12 +12,12 @@ type Event struct {
 	Description string    `binding:"required"`
 	Location    string    `binding:"required"`
 	DateTime    time.Time `binding:"required"`
-	UserID      int
+	UserID      int64
 }
 
 var events = []Event{}
 
-func (e Event) Save() error {
+func (e *Event) Save() error {
 	query := `
 	INSERT INTO events(name, description, location, dateTime, user_id) 
 	VALUES (?, ?, ?, ?, ?)` // ? is a placeholder for values to be inserted
@@ -39,7 +39,7 @@ func (e Event) Save() error {
 }
 
 func GetAllEvents() ([]Event, error) {
-	query := `SELECT * FROM events`
+	query := "SELECT * FROM events"
 	rows, err := db.DB.Query(query) // For fetching. Typically used for getting data from database
 	// No much sense to use Prepare statement here, because we don't have any values to insert
 
@@ -47,6 +47,8 @@ func GetAllEvents() ([]Event, error) {
 		return nil, err
 	}
 	defer rows.Close()
+
+	var events []Event
 
 	for rows.Next() {
 		var event Event
@@ -90,5 +92,49 @@ func (e Event) Update() error {
 	defer stmt.Close()
 
 	_, err = stmt.Exec(e.Name, e.Description, e.Location, e.DateTime, e.ID)
+	return err
+}
+
+func (e Event) Delete() error {
+	query := `DELETE FROM events WHERE id = ?`
+	stmt, err := db.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(e.ID)
+	return err
+}
+
+func (e Event) Register(userId int64) error {
+	query := "INSERT INTO registrations(event_id, user_id) VALUES (?, ?)"
+	stmt, err := db.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(e.ID, userId)
+
+	return err
+}
+
+func (e Event) CancelRegistration(userId int64) error {
+	query := "DELETE FROM registrations WHERE event_id = ? AND user_id = ?"
+	stmt, err := db.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(e.ID, userId)
+
 	return err
 }
